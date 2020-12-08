@@ -6,17 +6,6 @@ import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
-        val paintCanvasView = PaintCanvasView(this )
-
-//        paintCanvasView.systemUiVisibility = SYSTEM_UI_FLAG_FULLSCREEN
-        paintCanvasView.windowInsetsController?.hide(WindowInsets.Type.navigationBars())
-        paintCanvasView.contentDescription = getString(R.string.canvasContentDescription)
-        setContentView(paintCanvasView)
-
-    }
 }
