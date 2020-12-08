@@ -45,6 +45,7 @@ class PaintCanvasView @JvmOverloads constructor(
     }
 
     private var path = Path()
+    private val drawing = Path()
 
     private var frame = Rect(0, 0, 0, 0)
 
@@ -64,6 +65,9 @@ class PaintCanvasView @JvmOverloads constructor(
         super.onDraw(canvas)
         canvas?.drawBitmap(extraBitmap, 0f, 0f, null)
         canvas?.drawRect(frame, paint)
+        canvas?.drawPath(drawing, paint)
+        // Draw any current squiggle
+        canvas?.drawPath(path, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -107,12 +111,13 @@ class PaintCanvasView @JvmOverloads constructor(
             currentX = motionTouchEventX
             currentY = motionTouchEventY
             // Draw the path in the extra bitmap to cache it.
-            extraCanvas.drawPath(path, paint)
+//            extraCanvas.drawPath(path, paint)
         }
         invalidate()
     }
 
     private fun touchUp() {
+        drawing.addPath(path)
         path.reset()
     }
 
