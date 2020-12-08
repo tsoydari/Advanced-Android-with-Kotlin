@@ -2,10 +2,7 @@ package com.example.minipaint
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -49,6 +46,8 @@ class PaintCanvasView @JvmOverloads constructor(
 
     private var path = Path()
 
+    private var frame = Rect(0, 0, 0, 0)
+
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
         extraBitmap.recycle()
@@ -56,11 +55,15 @@ class PaintCanvasView @JvmOverloads constructor(
         extraCanvas = Canvas( extraBitmap)
 
         extraCanvas.drawColor(backgroundColor)
+
+        val inset = 40
+        frame = Rect(inset, inset, width - inset, height - inset)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawBitmap(extraBitmap, 0f, 0f, null)
+        canvas?.drawRect(frame, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
